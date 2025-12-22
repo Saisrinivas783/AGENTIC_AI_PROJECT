@@ -1,0 +1,6 @@
+tools:
+  - name: IBTAgent
+    description: "Handles benefit/coverage related questions"
+    type: local_stub
+    endpoint: "local://ibt"
+    required_parameters: []
