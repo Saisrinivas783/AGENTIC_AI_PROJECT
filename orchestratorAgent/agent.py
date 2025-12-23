@@ -1,5 +1,3 @@
-# agent.py
-
 from typing import Dict, Any
 
 from schemas.api import InvocationRequest, InvocationResponse
@@ -9,7 +7,6 @@ from orchestrator.graph import build_graph
 
 
 class OrchestratorAgent:
-
     def __init__(self, registry_path: str = "registry/tools-config.yaml"):
         self.registry_path = registry_path
         self.registry = load_tools_registry(self.registry_path)
@@ -19,19 +16,19 @@ class OrchestratorAgent:
         state = OrchestratorState(
             query=payload.userPrompt,
             session_id=payload.sessionId,
-            context=(payload.context.model_dump() if payload.context else {}),
+            context=payload.context.model_dump() if payload.context else {},
         )
+
         out_dict: Dict[str, Any] = self.graph_app.invoke(state.model_dump())
         out_state = OrchestratorState(**out_dict)
 
+        overall_conf = 0.0
+        if out_state.selected_tools:
+            overall_conf = float(max(t.confidence for t in out_state.selected_tools))
+
         return InvocationResponse(
             sessionId=payload.sessionId,
-            selectedTool=out_state.selected_tool_name or "Unknown",
-            confidence=float(out_state.selected_tool_confidence or 0.0),
-            responseText=out_state.final_answer or "",
-            metadata={
-                "intent": out_state.intent,
-                "intent_confidence": out_state.intent_confidence,
-                "debug_messages": out_state.messages,
-            },
+            selectedTool=out_state.selected_tools,
+            confidence=overall_conf,
+            responseText=out_state.tool_results,
         )

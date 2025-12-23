@@ -1,20 +1,23 @@
-from typing import Any, Dict, Optional
+from typing import List
 from pydantic import BaseModel
+from .tools import ToolResult, SelectedTools
+
 
 class InvocationContext(BaseModel):
-    userName: Optional[str] = None
-    userType: Optional[str] = None
-    source: Optional[str] = None
-    promptId: Optional[str] = None
+    userName: str
+    userType: str
+    source: str
+    promptId: str
+
 
 class InvocationRequest(BaseModel):
     userPrompt: str
     sessionId: str
-    context: Optional[InvocationContext] = None
+    context: InvocationContext
+
 
 class InvocationResponse(BaseModel):
     sessionId: str
-    selectedTool: str
+    selectedTool: List[SelectedTools]
     confidence: float
-    responseText: str
-    metadata: Dict[str, Any] = {}
+    responseText: List[ToolResult]
