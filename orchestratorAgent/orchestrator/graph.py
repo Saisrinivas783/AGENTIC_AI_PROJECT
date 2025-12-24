@@ -6,12 +6,12 @@ from orchestrator.nodes.select_tools_node import select_tools_node
 from orchestrator.nodes.tool_exec import tool_exec_node
 from orchestrator.nodes.response_compose import response_compose_node
 
-def build_graph(registry: dict):
+def build_graph():
     workflow = StateGraph(OrchestratorState)
 
-    workflow.add_node("intent", lambda s: intent_node(s, registry))
-    workflow.add_node("select_tools", lambda s: select_tools_node(s, registry))
-    workflow.add_node("call_tools", lambda s: tool_exec_node(s, registry))
+    workflow.add_node("intent", intent_node)
+    workflow.add_node("select_tools", select_tools_node)
+    workflow.add_node("call_tools", tool_exec_node)
     workflow.add_node("response", response_compose_node)
 
     workflow.set_entry_point("intent")

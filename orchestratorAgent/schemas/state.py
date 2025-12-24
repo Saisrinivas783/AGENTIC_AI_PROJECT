@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 from schemas.api import InvocationContext
 from .tools import SelectedTools, ToolResult
@@ -12,9 +12,10 @@ class OrchestratorState(BaseModel):
 
     intent: Optional[str] = None
     intent_confidence: Optional[float] = None
+    
+    registry: Dict[str, Any] = Field(default_factory=dict)
 
     selected_tools: List[SelectedTools] = Field(default_factory=list)
-
     tool_results: List[ToolResult] = Field(default_factory=list)
 
     final_answer: Optional[str] = None

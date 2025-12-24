@@ -2,7 +2,8 @@ from schemas.state import OrchestratorState
 from schemas.tools import SelectedTools
 
 
-def select_tools_node(state: OrchestratorState, registry: dict) -> OrchestratorState:
+def select_tools_node(state: OrchestratorState) -> OrchestratorState:
+    registry = state.registry or {}
     tools = registry.get("tools", [])
     tool_names = [t.get("name") for t in tools if t.get("name")]
 
