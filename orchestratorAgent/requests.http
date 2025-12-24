@@ -1,3 +1,5 @@
+# uvicorn app:app --reload --port 8000      
+
 ### Ping
 GET http://localhost:8000/ping
 
