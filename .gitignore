@@ -1,3 +1,37 @@
+# Byte-compiled / cache files
 __pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
 
+# Environment files
 .env
+.env.*
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Test / coverage
+.pytest_cache/
+.cache
+.coverage
+coverage.xml
+htmlcov/
+
+# Tooling caches
+.mypy_cache/
+pip-wheel-metadata/
+*.egg-info/
+
+# Distribution / build
+build/
+dist/
+
+# IDEs and OS files
+.vscode/
+.idea/
+.DS_Store
